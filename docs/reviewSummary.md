@@ -72,4 +72,4 @@ class Demonstration {
 
 - 定义枚举值，如果不入库，用字符表示更好
 
-
+- java.lang.AbstractStringBuilder.setLength(0) 了解下..
