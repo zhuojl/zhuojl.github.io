@@ -1,25 +1,44 @@
+## review 好文整理
+- [CODE REVIEW中的几个提示](https://coolshell.cn/articles/1302.html)
+- [从CODE REVIEW 谈如何做技术](https://coolshell.cn/articles/11432.html)
+- [同事1的review总结](http://671b134e.wiz03.com/share/s/1D6Nde1iPA2G2Ubs6f1kzm8B3pQwiK0YmQtG2d06T83a1fhS)
+- [同事2的review总结](http://note.youdao.com/noteshare?id=068837d5dca69ddfcf41c35884de896b&sub=3FF9CB9D60424070B0B1977FE34B8EEC)
 
 
-个人review总结：
+## 个人review总结：
 
 - if else 简化
 
 修改前：
 ```java
-if (a == null) {
-   // doSomething
-   if (xxx) {a=xx}
-   return a;
+class Demonstration {
+    
+    // 待优化
+    public void function() {
+        if(boolean1) {
+            // doSth1
+        } else {
+            if(boolean2) {
+                // doSth2
+            } else {
+                // doSth3
+            }
+        }
+    }
+    
+    // 优化后
+    public void function(){
+        if(boolean1) {
+            // doSth1
+            return;
+        }
+        if(boolean2) {
+            // doSth2
+            return;
+        }
+        // doSth3
+    }
 }
-```
-
-修改后：
-```java
-// 层数减少一层。更简洁
-if (a != null) { 
-    return a;
-}
-if (xxx) { return xx;}
 ```
 
 - 对外接口返回值，不要直接返回数组,不宜扩展
@@ -33,18 +52,20 @@ if (xxx) { return xx;}
 - redis锁高于事务锁问题
 
 ```java
+class Demonstration {
 
-@Override
-@Transactional(rollbackFor = Exception.class) 
-public void test() {
-    // 业务基本验证
-    redisLock; // redis锁
-    try {
-        if (notExist) { // 如果不存在
-            insert(); // 则插入
+    @Override
+    @Transactional(rollbackFor = Exception.class) 
+    public void test() {
+        // 业务基本验证
+        redisLock; // redis锁
+        try {
+            if (notExist) { // 如果不存在
+                insert(); // 则插入
+            }
+        } finally {
+            releaseRedisLock; // 释放redis锁
         }
-    } finally {
-        releaseRedisLock; // 释放redis锁
     }
 }
 ```
