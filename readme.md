@@ -1,5 +1,5 @@
-# 背景
-虽然很多东西杂七杂八的，不过可以先记录，以后慢慢再整理把
+# 文章整理
+平时工作中也会整理一些东西，以后一会同步到这里来
 
 - [mybatis参数解析](./docs/mybatis/mybatisParameter.md)
 - [mybatis插件加解密](./docs/mybatis/mybatis-crypt.md)
