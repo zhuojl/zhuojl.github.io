@@ -73,3 +73,13 @@ class Demonstration {
 - 定义枚举值，如果不入库，用字符表示更好
 
 - java.lang.AbstractStringBuilder.setLength(0) 了解下..
+
+- 可能为空的返回值，尽量返回Optional
+
+- 对外接口的返回值，能返回list时，不要返回map，避免有多个key时增加接口
+
+- Thread.sleep修改为TimeUnit.sleep 更能表达清楚休眠的时间
+
+- 
+
+ 
