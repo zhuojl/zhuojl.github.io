@@ -10,11 +10,17 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>concurrency</module>
-    <module>io</module>
     <module>common</module>
-    <module>optimize</module>
-    <module>algorithm</module>
+    <module>mass</module>
   </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.6</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
