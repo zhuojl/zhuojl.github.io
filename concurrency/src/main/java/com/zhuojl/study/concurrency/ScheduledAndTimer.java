@@ -27,16 +27,25 @@ public class ScheduledAndTimer {
     private static AtomicInteger count = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        testTimer();
-//        testScheduler();
+//        testTimer();
+        testScheduler();
     }
 
     private static void testScheduler() {
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2, r ->
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1, r ->
             new Thread(r, "scheduled" + count.getAndIncrement()));
-        executorService.scheduleAtFixedRate(() ->
-            System.out.println(Thread.currentThread().getName() + ":" + System.nanoTime())
-            , 0, 5, TimeUnit.SECONDS);
+        executorService.schedule(() ->
+                System.out.println(Thread.currentThread().getName() + "1:" + System.nanoTime() + executorService)
+            , 50, TimeUnit.SECONDS);
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executorService.schedule(() ->
+                System.out.println(Thread.currentThread().getName() + "2:" + executorService + System.nanoTime())
+            , 20, TimeUnit.SECONDS);
     }
 
     private static void testTimer() {
