@@ -1,9 +1,9 @@
 ## review 好文整理
+- [代码审查之最佳实践](https://mp.weixin.qq.com/s/p_CNasQxzdni4G2eD0xUrQ?from=singlemessage)
 - [CODE REVIEW中的几个提示](https://coolshell.cn/articles/1302.html)
 - [从CODE REVIEW 谈如何做技术](https://coolshell.cn/articles/11432.html)
 - [同事1的review总结](http://671b134e.wiz03.com/share/s/1D6Nde1iPA2G2Ubs6f1kzm8B3pQwiK0YmQtG2d06T83a1fhS)
 - [同事2的review总结](http://note.youdao.com/noteshare?id=068837d5dca69ddfcf41c35884de896b&sub=3FF9CB9D60424070B0B1977FE34B8EEC)
-
 
 ## 个人review总结：
 
@@ -80,6 +80,22 @@ class Demonstration {
 
 - Thread.sleep修改为TimeUnit.sleep 更能表达清楚休眠的时间
 
-- 
+- 增加状态码返回，而非直接抛出异常，让父级捕获，容易出现太长的异常链
 
+- jdk自带Objects类有不少好用的静态方法，requireNonNull,isNull,equals,hashCode生成函数等
+
+- 所有非业务逻辑的实现，都可以考虑抽象成工具方法或者某种结构的处理。比如list的合并。
+
+- 对于不需要对await有时间需求的CountDownLatch，用ExecutorService.submit()更好
+
+- 复杂对象传递，不要用字符串拼接，也许最终入库是json或者其他格式的特殊字符串，但是程序内部要有对象，
+这样在理解和验证的时候才方便做验证和逻辑处理，看到别人业务代码中的正则验证留下了眼泪
+
+- 利用位操作，求交并集了解下
+
+- TODO ：rpc接口参数如何避免重复定义
  
+
+
+
+

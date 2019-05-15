@@ -1,4 +1,4 @@
-package com.zhuojl.study.concurrency.common;
+package com.zhuojl.study.common;
 
 /**
  *
