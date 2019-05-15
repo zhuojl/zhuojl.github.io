@@ -1,0 +1,229 @@
+{
+  "remark": "spring容器启动流程",
+  "AbstractApplicationContext.refresh()": [
+    {
+      "remark": "初始化配置，并检测，通过springboot启动的应用，没有特殊内容，暂时不管 ",
+      "originalRemark": "Prepare this context for refreshing.  ",
+      "AbstractApplicationContext.prepareRefresh": [
+        "AbstractApplicationContext.initPropertySources",
+        "AbstractApplicationContext.getEnvironment().validateRequiredProperties()"
+      ]
+    },
+    {
+      "remark": "初始化bean工厂",
+      "originalRemark": "Tell the subclass to refresh the internal bean factory. ",
+      "AbstractApplicationContext.obtainFreshBeanFactory": [
+        "1. 设置容器id",
+        "2. 返回bean工厂"
+      ]
+    },
+    {
+      "remark": "容器准备",
+      "originalRemark": "Prepare the bean factory for use in this context",
+      "AbstractApplicationContext.prepareBeanFactory": [
+        "1. bean属性设置 setBeanClassLoader setBeanExpressionResolver addPropertyEditorRegistrar",
+        "2. 增加BeanPostProcessor ApplicationContextAwareProcessor ApplicationListenerDetector",
+        "3. ignoreDependencyInterface 依赖注入时忽略这些依赖，在AbstractAutowireCapableBeanFactory.populateBean方法中调用，会过滤这些依赖",
+        "4. registerResolvableDependency 依赖注入某些接口，返回对应的对象，详细见resolvableDependencies 用法",
+        "5. 将环境变量注入容器中，"
+      ]
+    },
+    {
+      "remark": "容器后置处理，目前实现为空",
+      "originalRemark": "Allows post-processing of the bean factory in context subclasses.",
+      "AbstractApplicationContext.postProcessBeanFactory": {
+      }
+    },
+    {
+      "remark": "触发容器后置处理器执行",
+      "originalRemark": "Invoke factory processors registered as beans in the context",
+      "AbstractApplicationContext.invokeBeanFactoryPostProcessors 内部调用 ": [
+        {
+          "如果容器是：BeanDefinitionRegistry（bean定义注册器？）特殊处理BeanDefinitionRegistryPostProcessor，调用它的postProcessBeanDefinitionRegistry方法, ": [
+            "在mybatis中就是实现了该接口",
+            "1. 【处理容器中已有的processor】，",
+            "2. 【处理容器中定义的实现了PriorityOrdered】",
+            "3. 【处理容器中定义的实现了Ordered】",
+            "4. 【处理容器中定义的没有实现上诉接口的】",
+            "重要的BeanDefinitionRegistryPostProcessor=============:",
+            "ConfigurationClassPostProcessor: 用来处理ComponentScans 和 ComponentScan，PropertySource,PropertySources等配置的，他的扫描就是ClassPathBeanDefinitionScanner，mybatis和这个一模一样",
+            "MapperScannerConfigurer mybatis配置类 他的整体逻辑很像上面的ConfigurationClassPostProcessor",
+            "PropertySourcesPlaceholderConfigurer 加载各种配置,也会加载EnvironmentAware 部分配置 https://www.jianshu.com/p/a3c7ff0de5ac",
+            "PropertyPlaceholderConfigurer 与上面只相差一个EnvironmentAware 接口实现 ",
+            "但是@value属性是在AnnotationXXXX中处理的，在AbstractBeanFactory.resolveEmbeddedValue中调用的",
+            "EventListenerMethodProcessor implements SmartInitializingSingleton, ApplicationContextAware, BeanFactoryPostProcessor ",
+            "EventListenerMethodProcessor 在这一步初始化eventListenerFactories",
+            "SmartInitializingSingleton 的执行时机是bean初始化完成之后",
+            "",
+            "ConfigurationBeanFactoryMetadata "
+          ],
+          "否者 invokeBeanFactoryPostProcessors": ""
+        },
+        "再从容器中获取BeanFactoryPostProcessor，分别按PriorityOrdered，ordered，没有顺序的依次执行postProcessBeanFactory",
+        "重要的BeanFactoryPostProcessor==============="
+      ]
+    },
+    {
+      "remark": "注册BeanPostProcessor",
+      "AbstractApplicationContext.registerBeanPostProcessors": [
+        {
+          "prepareBeanFactory期间创造的": [
+            "ApplicationContextAwareProcessor 这个类在bean初始化时，处理EnvironmentAware，ResourceLoaderAware等",
+            "WebApplicationContextServletContextAwareProcessor 处理 ServletContextAware ServletConfigAware等",
+            "ImportAwareBeanPostProcessor 处理ImportAware "
+          ]
+        },
+        {
+          "PriorityOrdered": [
+            "ConfigurationPropertiesBindingPostProcessor  触发时机是在 initializeBean  暂忽略",
+            "CommonAnnotationBeanPostProcessor 处理初始化方法，invokeInitMethods，处理@PostConstruct等方法",
+            "AutowiredAnnotationBeanPostProcessor 在populate 那已经处理了，用于处理@Autowire和@Value"
+          ]
+        },
+        {
+          "summary": "这三个都是 AspectJAwareAdvisorAutoProxyCreator extends AbstractAdvisorAutoProxyCreator ",
+          "Ordered": [
+            {
+              "AnnotationAwareAspectJAutoProxyCreator ": [
+                "AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorAutoProxyCreator extends AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyCreator ",
+                "AbstractAutoProxyCreator extends ProxyProcessorSupport implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware",
+                "SmartInstantiationAwareBeanPostProcessor extends InstantiationAwareBeanPostProcessor extends BeanPostProcessor",
+                {
+                  "wrapIfNecessary": [
+                    "isInfrastructureClass 判断是不是Advisor 等相关的类  shouldSkip 判断是否需要跳过，",
+                    "找到配置的拦截器 Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null)",
+                    {
+                      "创建代理AbstractAutoProxyCreator.createProxy": [
+                        "为beanDefinition 设置ORIGINAL_TARGET_CLASS_ATTRIBUTE属性",
+                        "构建ProxyFactory",
+                        {
+                          "ProxyFactory.getProxy(java.lang.ClassLoader)": [
+                            "返回代理工厂类 org.springframework.aop.framework.ProxyCreatorSupport.getAopProxyFactory",
+                            "根据配置或者类属性，返回对应的代理 org.springframework.aop.framework.DefaultAopProxyFactory.createAopProxy ",
+                            {
+                              "CglibAopProxy.getProxy(java.lang.ClassLoader)": [
+                                "组装 Cglib Enhancer ",
+                                "创建代理",
+                                "执行调用CglibMethodInvocation.invokeJoinpoint"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor extends AbstractAdvisingBeanPostProcessor implements BeanFactoryAware",
+            "AbstractAdvisingBeanPostProcessor extends ProxyProcessorSupport implements BeanPostProcessor ",
+            "ProxyProcessorSupport extends ProxyConfig implements Ordered, BeanClassLoaderAware, AopInfrastructureBean",
+            "实现和aop注解的差不多，就是特殊处理，已经是代理对象的情况，如果没有再组装ProxyFactory，后面就和上面一样了",
+            "====================",
+            "MethodValidationPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor implements InitializingBean",
+            "这个就和AsyncAnnotationBeanPostProcessor完全一样了，这两个就是注解不一样"
+          ]
+        },
+        {
+          "NoneOrdered": [
+            "ErrorPageRegistrarBeanPostProcessor ",
+            "WebServerFactoryCustomizerBeanPostProcessor "
+          ]
+        },
+        {
+          "MergedBeanDefinitionPostProcessor ": [
+            "CommonAnnotationBeanPostProcessor 处理初始化方法，invokeInitMethods，处理@PostConstruct等方法",
+            "AutowiredAnnotationBeanPostProcessor 在populate 那已经处理了，用于处理@Autowire和@Value "
+          ]
+        }
+      ]
+    },
+    {
+      "remark": "初始化国际化资源，用于异常提示之类的，暂放弃",
+      "originalRemark": "Initialize message source for this context.",
+      "AbstractApplicationContext.initMessageSource": {
+      }
+    },
+    {
+      "remark": "初始化事件广播器，便于后面广播，大概是观察者模式吧，暂不看",
+      "originalRemark": "Initialize event multicaster for this context.",
+      "AbstractApplicationContext.initApplicationEventMulticaster": {
+      }
+    },
+    {
+      "remark": "空白",
+      "originalRemark": "空白",
+      "AbstractApplicationContext.onRefresh": {
+      }
+    },
+    {
+      "remark": "为了上面的事件通知器，添加listener，发生事件时，通知这些类",
+      "originalRemark": "Check for listener beans and register them.",
+      "AbstractApplicationContext.registerListeners": {
+      }
+    },
+    {
+      "remark": "初始化所有的非懒加载的类",
+      "originalRemark": "Instantiate all remaining (non-lazy-init) singletons.",
+      "AbstractApplicationContext.finishBeanFactoryInitialization": [
+        {
+          "remark": "实例化所有的非懒加载的 单例",
+          "DefaultListableBeanFactory.preInstantiateSingletons": [
+            {
+              "1. foreach 所有的bean定义 进行实例化": [
+                "1. 工厂bean特殊判断",
+                {
+                  "2. 调用getBean -> 调用doGetBean（这里忽略从缓存中拿的逻辑）": [
+                    "1. 从父类中拿",
+                    "2. final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);",
+                    "3. 处理dependsOn, 从容器中获取依赖的bean",
+                    {
+                      "4. getSingleton -> createBean": [
+                        "(Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.)",
+                        "resolveBeforeInstantiation 在bean初始化之前，尝试提前返回一个代理类",
+                        "实际是：InstantiationAwareBeanPostProcessor特殊处理，如果返回不是空，则返回该代理",
+                        "简单配置后发现没有返回bean的，  XXX暂时不管XXX  ",
+                        "=================================",
+                        {
+                          "doCreateBean": [
+                            {
+                              "applyMergedBeanDefinitionPostProcessors": [
+                                "调用MergedBeanDefinitionPostProcessor.postProcessMergedBeanDefinition"
+                              ]
+                            },
+                            {
+                              "populateBean": [
+                                "特殊处理：InstantiationAwareBeanPostProcessor, AutowiredAnnotationBeanPostProcessor 就是在这处理的，调用postProcessProperties"
+                              ]
+                            },
+                            {
+                              "initializeBean": [
+                                "invokeAwareMethods 内部有3个aware接口，beanName，BeanFactory,classLoader",
+                                "applyBeanPostProcessorsBeforeInitialization 处理BeanPostProcessor postProcessBeforeInitialization，例如applicationContext, postConstruct",
+                                "invokeInitMethods：（InitializingBean ,指定initMethod）",
+                                "applyBeanPostProcessorsAfterInitialization 处理BeanPostProcessor postProcessAfterInitialization，例如三个代理实现等"
+                              ]
+                            },
+                            {
+                              "registerDisposableBeanIfNecessary": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "2. SmartInitializingSingleton 后置处理，Trigger post-initialization callback for all applicable beans..."
+          ]
+        }
+      ]
+    },
+    {
+      "remark": "事件通知等",
+      "AbstractApplicationContext.finishRefresh": {
+      }
+    }
+  ]
+}
