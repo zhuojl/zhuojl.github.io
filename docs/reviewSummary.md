@@ -1,3 +1,5 @@
+# review 总结
+
 ## review 好文整理
 - [代码审查之最佳实践](https://mp.weixin.qq.com/s/p_CNasQxzdni4G2eD0xUrQ?from=singlemessage)
 - [CODE REVIEW中的几个提示](https://coolshell.cn/articles/1302.html)
@@ -95,7 +97,15 @@ class Demonstration {
 
 - TODO ：rpc接口参数如何避免重复定义
  
+- 由于类中调用内部的方法，不走代理，在需要代理的地方可以使用SpringBeanUtils.getBean(getClass())
 
+- 【面向对象】一些简单的对象属性的赋值，使用工具类计算后的值等，不要放于service中，放在关联的对象中
 
+- 大的定时任务需要单独于面向用户的任务，避免带来稳定性等的影响 
 
+- guava工具类的使用，range，cache, RateLimiter, retryer
+
+- 外部接口的入参及方法一定要加注释
+
+- 数据变更过程记录，允许冗余数据
 
