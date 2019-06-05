@@ -49,3 +49,12 @@ LIMIT 0,1000
 
 问题&优化：order by create_time 可以优化为order by id desc
 
+问题&优化：大字段单独存储，
+
+问题&优化：被关联的表的关联字段才需要建立索引，不是两个表都建立
+
+问题&优化：错误：exits比in好;用关联查询走索引效果或许更好，重要的是通过explain查看计划
+
+问题&优化：order by 是走索引的，所以看到select count(*) from table 比 select * from table order by id 慢是正常的。
+
+
