@@ -1,10 +1,10 @@
 package com.zhuojl.study.refactor.demo1;
 
+import com.zhuojl.study.refactor.demo1.calculator.PerformanceCalculator;
+import com.zhuojl.study.refactor.demo1.calculator.PerformanceCalculatorFactory;
 import com.zhuojl.study.refactor.demo1.pojo.*;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * 3、拆分总金额计算与格式化部分
  * 4、抽取总金额，总积分计算方法
  * 5、抽离计算与展示
+ * 6、利用多态取代条件表达式
  *
  * @author zjl
  */
@@ -24,10 +25,6 @@ import java.util.stream.Collectors;
 public class Refactor {
 
     private Invoice invoice;
-    /**
-     * 演出的戏剧
-     */
-    private static final Map<String, Play> plays = initPlay();
 
     /**
      * 打印账单
@@ -35,6 +32,7 @@ public class Refactor {
     public void statement() {
         StatementDTO data = getStatementDTO();
         printData(data);
+        // 或者html展示或者导出，这就不实现了
     }
 
     private void printData(StatementDTO data) {
@@ -42,7 +40,7 @@ public class Refactor {
         String result = "Statement for " + data.getCustomer() + "\n";
         for (PerformanceResult performanceResult : data.getPerformances()) {
             // 字符拼装
-            result += " " + getPlay(performanceResult.getPerf()) + ": " + performanceResult.getAmount()
+            result += " " + performanceResult.getPlay().getName() + ": " + performanceResult.getAmount()
                     + " (" + performanceResult.getPerf().getAudienceCount() + " seats)\n";
         }
 
@@ -55,11 +53,7 @@ public class Refactor {
         StatementDTO statementDTO = new StatementDTO();
         statementDTO.setCustomer(invoice.getCustomer());
         statementDTO.setPerformances(invoice.getPerformances().stream()
-                .map(perf -> PerformanceResult.builder()
-                        .perf(perf)
-                        .amount(amountFor(perf))
-                        .credit(volumeCreditFor(perf))
-                        .build())
+                .map(perf -> performanceCalculate(perf))
                 .collect(Collectors.toList())
         );
         statementDTO.setTotalAmount(statementDTO.getPerformances().stream().mapToInt(PerformanceResult::getAmount).sum());
@@ -67,62 +61,14 @@ public class Refactor {
         return statementDTO;
     }
 
-    private int volumeCreditFor(Performance perf) {
-        int result = Math.max(perf.getAudienceCount() - 30, 0);
-        // 戏剧的额外积分
-        if ("comedy" == getPlay(perf).getType()) {
-            result += perf.getAudienceCount() / 5;
-        }
-        return result;
-    }
-
-    private Play getPlay(Performance perf) {
-        return plays.get(perf.getPlayId());
-    }
-
-    private int amountFor(Performance perf) {
-        int result;
-        switch (getPlay(perf).getType()) {
-            case "tragedy":
-                result = 40000;
-                if (perf.getAudienceCount() > 30) {
-                    result += 1000 * (perf.getAudienceCount() - 30);
-                }
-                break;
-            case "comedy":
-                result = 30000;
-                if (perf.getAudienceCount() > 20) {
-                    result += 10000 + 500 * (perf.getAudienceCount() - 20);
-                }
-                result += 300 * perf.getAudienceCount();
-                break;
-            default:
-                throw new RuntimeException("unknown type: " + getPlay(perf).getType());
-        }
-        return result;
-    }
-
-    private static Map<String, Play> initPlay() {
-        Map<String, Play> playMap = new HashMap<>();
-        Play play = Play.builder()
-                .playId("hamlet")
-                .name("Hamlet")
-                .type("tragedy")
+    private PerformanceResult performanceCalculate(Performance perf) {
+        PerformanceCalculator calculator = PerformanceCalculatorFactory.getCalculator(perf);
+        return PerformanceResult.builder()
+                .perf(perf)
+                .play(Util.getPlay(perf))
+                .amount(calculator.calculateAmount())
+                .credit(calculator.calculateCredit())
                 .build();
-        playMap.put(play.getPlayId(), play);
-        play = Play.builder()
-                .playId("as-like")
-                .name("As You Like It")
-                .type("comedy")
-                .build();
-        playMap.put(play.getPlayId(), play);
-        play = Play.builder()
-                .playId("othello")
-                .name("Othello")
-                .type("tragedy")
-                .build();
-        playMap.put(play.getPlayId(), play);
-        return playMap;
     }
 
 }

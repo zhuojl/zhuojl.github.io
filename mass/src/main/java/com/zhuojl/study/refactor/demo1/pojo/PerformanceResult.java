@@ -16,6 +16,8 @@ public class PerformanceResult {
      */
     private Performance perf;
 
+    private Play play;
+
     /**
      * 金额
      */
