@@ -1,12 +1,11 @@
 package com.zhuojl.study.refactor.demo1;
 
-import com.zhuojl.study.refactor.demo1.pojo.Invoice;
-import com.zhuojl.study.refactor.demo1.pojo.Performance;
-import com.zhuojl.study.refactor.demo1.pojo.Play;
+import com.zhuojl.study.refactor.demo1.pojo.*;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 发票打印，戏剧演出团开给客户账单实体类
@@ -17,7 +16,7 @@ import java.util.Map;
  * 2、移除局部变量
  * 3、拆分总金额计算与格式化部分
  * 4、抽取总金额，总积分计算方法
- *
+ * 5、抽离计算与展示
  *
  * @author zjl
  */
@@ -34,34 +33,38 @@ public class Refactor {
      * 打印账单
      */
     public void statement() {
+        StatementDTO data = getStatementDTO();
+        printData(data);
+    }
+
+    private void printData(StatementDTO data) {
         // 客户积分
-        String result = "Statement for " + invoice.getCustomer() + "\n";
-        for (Performance perf : invoice.getPerformances()) {
+        String result = "Statement for " + data.getCustomer() + "\n";
+        for (PerformanceResult performanceResult : data.getPerformances()) {
             // 字符拼装
-            result += " " + getPlay(perf).getName() + ": " + amountFor(perf) + " (" + perf.getAudienceCount() + " seats)\n";
+            result += " " + getPlay(performanceResult.getPerf()) + ": " + performanceResult.getAmount()
+                    + " (" + performanceResult.getPerf().getAudienceCount() + " seats)\n";
         }
 
-        result += "Amount owed is " + getTotalAmount() + "\n";
-        result += "You earned " + getVolumeCredits() + " credits\n";
+        result += "Amount owed is " + data.getTotalAmount() + "\n";
+        result += "You earned " + data.getTotalCredit() + " credits\n";
         System.out.println(result);
     }
 
-    private int getTotalAmount() {
-        int result = 0;
-        for (Performance perf : invoice.getPerformances()) {
-            int thisAmount = amountFor(perf);
-            result += thisAmount;
-        }
-        return result;
-    }
-
-    private int getVolumeCredits() {
-        int result = 0;
-        for (Performance perf : invoice.getPerformances()) {
-            // 积分叠加
-            result += volumeCreditFor(perf);
-        }
-        return result;
+    private StatementDTO getStatementDTO() {
+        StatementDTO statementDTO = new StatementDTO();
+        statementDTO.setCustomer(invoice.getCustomer());
+        statementDTO.setPerformances(invoice.getPerformances().stream()
+                .map(perf -> PerformanceResult.builder()
+                        .perf(perf)
+                        .amount(amountFor(perf))
+                        .credit(volumeCreditFor(perf))
+                        .build())
+                .collect(Collectors.toList())
+        );
+        statementDTO.setTotalAmount(statementDTO.getPerformances().stream().mapToInt(PerformanceResult::getAmount).sum());
+        statementDTO.setTotalCredit(statementDTO.getPerformances().stream().mapToInt(PerformanceResult::getCredit).sum());
+        return statementDTO;
     }
 
     private int volumeCreditFor(Performance perf) {
