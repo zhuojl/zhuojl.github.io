@@ -84,6 +84,9 @@ Netflix在设计此系统时，决定接受此开销的成本以换取它提供�
 ## 常见疑问 [源](https://github.com/Netflix/Hystrix/wiki/FAQ%20:%20General)
 
 
+## 配置说明
+https://blog.csdn.net/hry2015/article/details/78554846
+https://github.com/Netflix/Hystrix/wiki/Configuration
 
 
 ## 引用
