@@ -9,39 +9,7 @@
 
 ## 个人review总结：
 
-- if else 简化
-
-修改前：
-```java
-class Demonstration {
-    
-    // 待优化
-    public void function() {
-        if(boolean1) {
-            // doSth1
-        } else {
-            if(boolean2) {
-                // doSth2
-            } else {
-                // doSth3
-            }
-        }
-    }
-    
-    // 优化后
-    public void function(){
-        if(boolean1) {
-            // doSth1
-            return;
-        }
-        if(boolean2) {
-            // doSth2
-            return;
-        }
-        // doSth3
-    }
-}
-```
+- 使用 卫语句 优化 if else，[如](https://www.cnblogs.com/Braveliu/p/7364369.html)
 
 - 对外接口返回值，不要直接返回数组,不宜扩展
 
@@ -76,7 +44,7 @@ class Demonstration {
 
 - java.lang.AbstractStringBuilder.setLength(0) 了解下..
 
-- 可能为空的返回值，尽量返回Optional
+- 可能为空的返回值，尽量返回Optional，内部访问的其他情况默认不为null，不验证null
 
 - 对外接口的返回值，能返回list时，不要返回map，避免有多个key时增加接口
 
@@ -103,7 +71,7 @@ class Demonstration {
 
 - 大的定时任务需要单独于面向用户的任务，避免带来稳定性等的影响 
 
-- guava工具类的使用，range，cache, RateLimiter, retryer
+- guava工具类的使用，range，cache, RateLimiter, retryer, Lists
 
 - 外部接口的入参及方法一定要加注释
 
@@ -119,3 +87,12 @@ class Demonstration {
 
 - 代码紧凑度，相关代码放一起，代码精良短小，考虑代码位置
 
+- 如果一个类的属性可以由某几个对象解出来，可以考虑使用 建造者模式 将复杂度隔离到builder 类中，或者说用builder类代替build方法。
+
+- foreach 中处理了数据统计，也处理了类型转换，将类型转换与数据统计分开处理
+
+- 使用foreach进行多值求和时，使用stream().reduce()替换，更能表明用途
+
+- 调用外部接口，把外部文档连接写在方法体上
+
+- 
