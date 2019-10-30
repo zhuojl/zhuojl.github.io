@@ -47,11 +47,32 @@ full gc 由原来的5个小时/次，变成了15小时每次
 ### 延伸阅读
 深入理解java虚拟机第二版
 
+
+# 线程池系列
+
+## 背景：
+ 某日线上某个定时任务没有执行，这个定时任务是在服务启动后放进线程池的，按理说肯定一开始就拿到线程并开始执行了，
+ 但是中途却突然停止了，当得知这个问题时，第二天同事让运维重启了服务，保证业务的正常运行（同当时自己的想法）
+ 但是真正的问题是什么呢，底层原因？
+## 排查：
+ 1、通过日志平台，没有任务执行的日志，已经至少有3天没有跑定时任务了，并未发现什么原因
+ 2、查看监控平台，内存、请求量也没有异常
+ 3、在之前的工作中，发生过redis锁失效的问题，查看redis，没有发现异常，
+ 4、把情况跟其他同事沟通后，发现可能是线程池问题
+ 5、模拟复现，没发现问题，伪码如下：
+ ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, KEEP_ALIVE_TIME, TimeUnit.SECONDS,
+ new LinkedBlockingDeque<>(5), new ThreadPoolExecutor.CallerRunsPolicy())
+
+ executor.execute(() -> {
+    doSth1
+    executor.execute(() -> doSth2);
+ })
+ 且executor 仅用于这里。这样是不会发生死锁，只是任务多了就走reject逻辑，变成同步执行。
+所以也可能是doSth2内部发生阻塞，导致任务不能继续执行，下次一定需要dump文件再重启
+
+
+
 # 事务系列
-
-## 
-
-
 
 ## 使用spring事务隔离级别死锁
 ### 现象
