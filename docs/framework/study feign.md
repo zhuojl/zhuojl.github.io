@@ -13,6 +13,8 @@ feign的源码其实很少,  核心库只有50个类左右, 通过[官方例子]
 4. 代理类执行方法
 
 ### 源码
+源码版本号:2.1.x
+
 feign.Feign.Builder
 ``` 
 /**
@@ -209,10 +211,24 @@ public Request.Options options() {
 }
 ```
 5. 项目中场景处理
+    1. FeignClient 的name, value, serviceId 不能用"_"
     1. 分区设置 ==> 通过@RequestHeader处理, 不用线程传递
-    2. 部分接口有请求头的概念 ==> 增加代理实现, 类似spring-cloud-feign源码中[分页实现﻿](https://github.com/spring-cloud/spring-cloud-openfeign/blob/master/spring-cloud-openfeign-core/src/main/java/org/springframework/cloud/openfeign/support/PageableSpringEncoder.java)
+    2. 部分接口有请求头的概念 ==> 增加代理实现, 类似spring-cloud-feign源码中[分页实现](https://github.com/spring-cloud/spring-cloud-openfeign/blob/master/spring-cloud-openfeign-core/src/main/java/org/springframework/cloud/openfeign/support/PageableSpringEncoder.java)
+    3. feign内部的日志级别是debug，可能需要增加日志配置，logging.level.com.keruyun.retail.settings.rpc=debug
+    4. 响应消息中，部分部门有固定响应头，所以增加响应头解析，模拟SpringDecoder实现，在decode方法中增加包装
+    ```
+     // 注意第三个参数
+    Type wrapped = new ParameterizedTypeImpl(new Type[]{type}, null, Result.class);
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    HttpMessageConverterExtractor<?> extractor = new HttpMessageConverterExtractor(
+        wrapped, this.messageConverters.getObject().getConverters());
+    Object obj = extractor.extractData(new FeignResponseAdapter(response));
+    
+    ```
+    5. 上一点中不支持Optional，同样可以通过解析包装，来解析结果
 
 6. 注意事项
+
 不要使用PathVariable注解, 这样请求链接是动态的, 公司出现过因为链接动态,所以统计时是按不同联机统计的,因而出现内存问题, 等找到链接copy到这.
 
 ### 参考
