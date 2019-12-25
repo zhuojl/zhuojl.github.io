@@ -11,17 +11,20 @@
 - 系统架构图，模块划分(领域划分)
 
 - 公共功能：
-    - orm(mybatis)
+    - orm(mybatis，mybatisPlus)
+    - 分布式id生成算法（雪花）
+    - 分布式锁（zk，redis）
     - mq(rocketMq,kafka)
     - 数据库(mysql)
     - 缓存(redis)
     - 定时器(xxl-job)
-    - 配置中心(apollo)
     - 统一日志处理（skyWalking）
-    - 统一监控
-    - 统一配置中心（apollo）
+    - 统一监控（skyWalking）
+    - 统一配置中心（apollo，zk）
     - session获取
     - 导入，导出工具
+    - rpc请求体，响应体统一
+    - mq消息体统一
     
 - 文档记录形式，文档记录约定/规定,包括不限于：
     - 新人指导
@@ -39,6 +42,7 @@
     - 环境文档
     - 项目问题梳理和优化排期
     - 字段命名及定义说明，尽量避免一词多字段
+    - 会议记录，帮助以后回顾经过、决定
 
 - 代码规范
     - 代码规范
