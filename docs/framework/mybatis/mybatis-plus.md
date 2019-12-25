@@ -42,6 +42,7 @@ https://mp.baomidou.com/guide/logic-delete.html
 
 ### 遇到的问题
 jar包冲突, 需要引入高版本的mybatis-spring jar包
+开启逻辑删除，如果需要带更新人信息需要先更新再删除，或者手动写sql,或者扩展BaseMapper。
 
 ### 引用
 - github地址: https://github.com/baomidou/mybatis-plus
