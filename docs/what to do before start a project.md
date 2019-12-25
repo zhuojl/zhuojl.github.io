@@ -15,7 +15,7 @@
     - 分布式id生成算法（雪花）
     - 分布式锁（zk，redis）
     - mq(rocketMq,kafka)
-    - 数据库(mysql)
+    - 数据库(mysql) 
     - 缓存(redis)
     - 定时器(xxl-job)
     - 统一日志处理（skyWalking）
