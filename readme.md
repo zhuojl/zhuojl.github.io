@@ -1,6 +1,10 @@
 # 文章整理
 平时工作中也会整理一些东西，以后一会同步到这里来
 
+- [mybatis 加解密插件](https://github.com/zhuojl/mybatis-crypt)
+
+- [归档查询聚合框架](https://github.com/zhuojl/archive-agg)  
+
 
 - [框架学习](https://github.com/zhuojl/zhuojl.github.io/tree/master/docs/framework)
 
