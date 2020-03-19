@@ -1,0 +1,259 @@
+{
+  "data": [
+    {
+      "shop_identy": 810354281,
+      "server_create_time": "2020-03-10 21:12:35",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 100,
+      "creator_name": "it",
+      "updator_name": "\u4f0a\u5c1a\u60e0\u5357\u9547\u897f\u95e8\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810354281,
+      "server_create_time": "2020-03-11 19:56:59",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 100,
+      "creator_name": "it",
+      "updator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97"
+    },
+    {
+      "shop_identy": 810362631,
+      "server_create_time": "2020-03-12 17:21:45",
+      "status_flag": 2,
+      "prefix": "YS",
+      "range_start": 1,
+      "range_end": 280,
+      "creator_name": "\u5434\u743c",
+      "updator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97"
+    },
+    {
+      "shop_identy": 810362631,
+      "server_create_time": "2020-03-13 14:41:43",
+      "status_flag": 1,
+      "prefix": "YS",
+      "range_start": 1,
+      "range_end": 280,
+      "creator_name": "\u5434\u743c",
+      "updator_name": null
+    },
+    {
+      "shop_identy": 810474616,
+      "server_create_time": "2020-03-11 13:23:00",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 310,
+      "creator_name": "\u5b81\u6ce2\u4e1c\u90e8\u65b0\u57ce\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u8499\u9633\u9547\u8317\u8336\u8857\u5e97"
+    },
+    {
+      "shop_identy": 810497748,
+      "server_create_time": "2020-03-11 09:23:00",
+      "status_flag": 2,
+      "prefix": "ys",
+      "range_start": 1,
+      "range_end": 660,
+      "creator_name": "\u4f0a\u5c1a\u60e0\u5357\u9547\u897f\u95e8\u8def\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u6e05\u9547\u5e02\u4e2d\u73af\u56fd\u9645\u5e97"
+    },
+    {
+      "shop_identy": 810525387,
+      "server_create_time": "2020-03-11 18:07:18",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 308,
+      "creator_name": "\u4f0a\u5c1a\u5317\u6e56\u533a\u6052\u9686\u56fd\u9645\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97"
+    },
+    {
+      "shop_identy": 810525387,
+      "server_create_time": "2020-03-12 15:13:52",
+      "status_flag": 2,
+      "prefix": "YSHL",
+      "range_start": 1,
+      "range_end": 308,
+      "creator_name": "\u4f0a\u5c1a\u5317\u6e56\u533a\u6052\u9686\u56fd\u9645\u5e97",
+      "updator_name": "\u5434\u743c"
+    },
+    {
+      "shop_identy": 810525539,
+      "server_create_time": "2020-03-11 16:08:15",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 100,
+      "creator_name": "\u4f0a\u5c1a\u8499\u9633\u9547\u8317\u8336\u8857\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810525539,
+      "server_create_time": "2020-03-11 16:45:13",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 72,
+      "range_end": 300,
+      "creator_name": "\u4f0a\u5c1a\u8499\u9633\u9547\u8317\u8336\u8857\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810525539,
+      "server_create_time": "2020-03-11 17:16:57",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 73,
+      "range_end": 300,
+      "creator_name": "\u4f0a\u5c1a\u8499\u9633\u9547\u8317\u8336\u8857\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810525543,
+      "server_create_time": "2020-03-11 18:56:11",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 409,
+      "creator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97",
+      "updator_name": "it"
+    },
+    {
+      "shop_identy": 810525543,
+      "server_create_time": "2020-03-12 09:39:59",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 409,
+      "creator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810525543,
+      "server_create_time": "2020-03-13 09:37:01",
+      "status_flag": 2,
+      "prefix": "",
+      "range_start": 1,
+      "range_end": 499,
+      "creator_name": "\u4f0a\u5c1a\u5bcc\u6cca\u6e7e\u5e7f\u573a\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u6a2a\u5dde\u9547\u6c5f\u5317\u5927\u9053\u5e97"
+    },
+    {
+      "shop_identy": 810525544,
+      "server_create_time": "2020-03-11 13:20:42",
+      "status_flag": 2,
+      "prefix": "cxy",
+      "range_start": 8,
+      "range_end": 8,
+      "creator_name": "\u4f0a\u5c1a\u6e05\u9547\u5e02\u4e2d\u73af\u56fd\u9645\u5e97",
+      "updator_name": "\u5b81\u6ce2\u4e1c\u90e8\u65b0\u57ce\u5e97"
+    },
+    {
+      "shop_identy": 810525611,
+      "server_create_time": "2020-03-11 16:12:35",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 315,
+      "creator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u8499\u9633\u9547\u8317\u8336\u8857\u5e97"
+    },
+    {
+      "shop_identy": 810525611,
+      "server_create_time": "2020-03-11 17:00:28",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 315,
+      "creator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    },
+    {
+      "shop_identy": 810525611,
+      "server_create_time": "2020-03-11 17:31:06",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 315,
+      "creator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u5317\u6e56\u533a\u6052\u9686\u56fd\u9645\u5e97"
+    },
+    {
+      "shop_identy": 810525611,
+      "server_create_time": "2020-03-12 12:31:19",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 315,
+      "creator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u5317\u6e56\u533a\u6052\u9686\u56fd\u9645\u5e97"
+    },
+    {
+      "shop_identy": 810525611,
+      "server_create_time": "2020-03-13 11:28:23",
+      "status_flag": 2,
+      "prefix": "a",
+      "range_start": 1,
+      "range_end": 315,
+      "creator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97",
+      "updator_name": "\u5434\u743c"
+    },
+    {
+      "shop_identy": 810525635,
+      "server_create_time": "2020-03-13 09:54:20",
+      "status_flag": 2,
+      "prefix": "y",
+      "range_start": 200,
+      "range_end": 600000,
+      "creator_name": "\u4f0a\u5c1a\u6a2a\u5dde\u9547\u6c5f\u5317\u5927\u9053\u5e97",
+      "updator_name": "\u4f0a\u5c1a\u7f19\u4e91\u53bf\u7fe0\u7af9\u8def\u5e97"
+    }
+  ],
+  "title": [
+    {
+      "title": "shop_identy",
+      "key": "shop_identy",
+      "fixed": "left",
+      "width": 150
+    },
+    {
+      "title": "server_create_time",
+      "key": "server_create_time",
+      "width": 200
+    },
+    {
+      "title": "status_flag",
+      "key": "status_flag",
+      "width": 200
+    },
+    {
+      "title": "prefix",
+      "key": "prefix",
+      "width": 200
+    },
+    {
+      "title": "range_start",
+      "key": "range_start",
+      "width": 200
+    },
+    {
+      "title": "range_end",
+      "key": "range_end",
+      "width": 200
+    },
+    {
+      "title": "creator_name",
+      "key": "creator_name",
+      "width": 200
+    },
+    {
+      "title": "updator_name",
+      "key": "updator_name",
+      "width": 200
+    }
+  ],
+  "len": 21,
+  "cost_time": "0.0019s"
+}
