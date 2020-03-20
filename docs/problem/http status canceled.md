@@ -35,12 +35,16 @@ tomcat 服务；shiro + cas；ngnix 反向代理
 
 是shiro的问题吗，不熟悉，想本地debug，但是这个服务不能本地登录，权限组限制了本地认证！ 
 
-网上找资料``cas认证第三步canceled``，各种骚姿势都有。找了一圈答案是：``TOMCAT默认情况下的redirect会是80``
+网上找资料``cas认证第三步canceled``，各种骚姿势都有。
+
+找了一圈答案是：``TOMCAT默认情况下的redirect会是80``，浏览器的一种保护措施，拒绝混用http和https
 
 #### 解决
-配置ngnix: proxy_redirect       http:// https://;
+两种：
 
-修改tomcat配置，增加配置proxyName，proxyPort，scheme，secure：
+1、配置ngnix: proxy_redirect       http:// https://;
+
+2、修改tomcat配置，增加配置proxyName，proxyPort，scheme，secure：
 ``` html
 <Connector port="8080"
   proxyName="这里是域名"
@@ -56,4 +60,6 @@ tomcat 服务；shiro + cas；ngnix 反向代理
 - https://www.oschina.net/question/102370_2236727?p=1
 
 - https://yq.aliyun.com/articles/47111
+
+- https://www.jianshu.com/p/75edcc05acfd
 
