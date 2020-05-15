@@ -9,7 +9,7 @@
 - [框架学习](https://github.com/zhuojl/zhuojl.github.io/tree/master/docs/framework)
 
     - [mybatis](https://github.com/zhuojl/zhuojl.github.io/tree/master/docs/framework/mybatis)
-    - [spring容器启动](./docs/framework/springSummary.json)
+    - [spring容器启动](docs/framework/spring/springSummary.json)
     - [studyFeign](./docs/framework/studyFeign.md)
     - [studyHystrix](./docs/framework/studyHystrix.md)
     - [studyZookeeper](./docs/framework/studyZookeeper.md)
