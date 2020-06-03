@@ -130,7 +130,7 @@ public interface MergedBeanDefinitionPostProcessor extends BeanPostProcessor {
 }
 ```
 
-##### DestructionAwareBeanPostProcessor
+#####  DestructionAwareBeanPostProcessor
 
 对象销毁处理
 
@@ -152,8 +152,13 @@ public interface DestructionAwareBeanPostProcessor extends BeanPostProcessor {
 ##### 常见的实现
 
 ###### AbstractAutoProxyCreator
-aop处理的核心。todo
+aop处理的核心。
+aop处理，[详细见](./springAop.md)
 
+##### AbstractBeanFactoryAwareAdvisingPostProcessor extends AbstractAdvisingBeanPostProcessor；
+AbstractAdvisingBeanPostProcessor extends ProxyProcessorSupport implements BeanPostProcessor
+
+aop处理，[详细见](./springAop.md)
 
 ###### CommonAnnotationBeanPostProcessor extends InitDestroyAnnotationBeanPostProcessor implements InstantiationAwareBeanPostProcessor
 主要处理@Resource、@PostConstruct和@PreDestroy注解的实现。
@@ -172,14 +177,18 @@ aop处理的核心。todo
 ###### AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor
 
 ###### ScheduledAnnotationBeanPostProcessor implements MergedBeanDefinitionPostProcessor, DestructionAwareBeanPostProcessor,
-		Ordered, EmbeddedValueResolverAware, BeanNameAware, BeanFactoryAware, ApplicationContextAware,
-		SmartInitializingSingleton。。。。
+Ordered, EmbeddedValueResolverAware, BeanNameAware, BeanFactoryAware, ApplicationContextAware, SmartInitializingSingleton。。。。
 
 ###### ApplicationContextAwareProcessor 简单判断是否是 EnvironmentAware、ApplicationContextAware等的实现，是则设置属性
 
 ###### ImportAwareBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
 处理 importAware
 
+#### 其他
+
+SmartInitializingSingleton 在DefaultListableBeanFactory#preInstantiateSingletons 的最后，会再判断是否是 SmartInitializingSingleton 的实现，
+触发afterSingletonsInstantiated，常见的有 ScheduledAnnotationBeanPostProcessor 处理执行task；KafkaListenerAnnotationBeanPostProcessor
+处理注册消费者；CacheAspectSupport后置处理。
 
 #### 引用
 -[阿里大佬总结](https://fangjian0423.github.io/2017/06/24/spring-embedded-bean-post-processor/)
