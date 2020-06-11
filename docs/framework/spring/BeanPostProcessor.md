@@ -184,6 +184,9 @@ Ordered, EmbeddedValueResolverAware, BeanNameAware, BeanFactoryAware, Applicatio
 ###### ImportAwareBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
 处理 importAware
 
+###### ConfigurationPropertiesBindingPostProcessor
+处理 ConfigurationProperties
+
 #### 其他
 
 SmartInitializingSingleton 在DefaultListableBeanFactory#preInstantiateSingletons 的最后，会再判断是否是 SmartInitializingSingleton 的实现，
