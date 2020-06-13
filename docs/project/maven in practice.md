@@ -232,3 +232,8 @@
 
 [好文](https://github.com/landy8530/fortune-commons/wiki/Maven-Version-Control)
 
+
+
+[maven 默认属性](https://blog.procsdn.net/qq_16605855/article/details/79726660)
+
+[官网profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)
