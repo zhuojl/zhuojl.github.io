@@ -5,7 +5,7 @@
 #### 消费者 注册
 不同于spring-mybatis的处理，kafka消费者不需要暴露给其他bean，所以不需要注册到容器中。
 完整 kafka消费者 的处理流程分为3个阶段：
-1. BeanPostProcessor 处理kafka SmartInitializingSingleton解析，注册KafkaListenerEndpoint到KafkaListenerEndpointRegistrar
+1. KafkaListenerAnnotationBeanPostProcessor(BeanPostProcessor) 处理kafka SmartInitializingSingleton解析，注册KafkaListenerEndpoint到KafkaListenerEndpointRegistrar
 2. SmartInitializingSingleton 在所单例bean初始化之后，设置一些属性，触发KafkaListenerEndpointRegistrar.registerAllEndpoints
 3. 在finishRefresh()中调用SmartLifecycle.start() 启动kafka消费者
 
@@ -78,5 +78,9 @@ RoundRobin：把主题的所有分区逐个分配给消费者。RoundRobin策略
 - 在不指定任何taskExecutor的情况下，一个消费者至少3个线程：消费者线程、监控线程、协调器线程
 - 一些bean启动或者加载需要消耗很多资源或者影响很多东西，可以通过SmartLifecycle 后置处理，
 避免先启动后其他bean处理失败而处理失败流程
+
+
+======== 2020-06-17 更新 ==========
+我是谁，我在哪，这是我写的吗。。。。。。。
 
 
