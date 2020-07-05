@@ -6,10 +6,10 @@
 
 #### 现状
 目前项目划分为两块，一块web，一块其他业务逻辑，容器配置放置在web层
-    
+
 - web（MODULE，web服务模块，引用biz模块）
     - controller
-    - config （做spring bean 配置的地方）
+    - config （做spring bean 配置的地方，我们项目中配置了feign，mybatis，线程池，kafka，redis等（。。。））
 - biz（MODULE，业务模块）
     - rpc
     - MQ-consumer
@@ -34,8 +34,25 @@
 3. 内部业务处理
 4. 定时任务（大任务，或者统一管理任务），这类差不多也可以算作是入口，但是定时任务到后期往往需要单独成服务，
 避免对常规业务处理造成性能影响
-        
+
 为了方便测试，扩展模块（如定时任务或者服务级模块），各个模块能独立配置，就不用copy配置，单元测试也可以分模块做，而且项目结构清晰！
+示例：
+- web（MODULE，web服务模块，引用biz模块）
+    - controller
+    - config （只做controller的配置）
+- biz（MODULE，业务模块，如果这一层不细分，多个分散的config就不要）
+  - feign
+    - config
+  - MQ-consumer
+    - config
+  - dao
+    - config
+  - service
+    - config
+- schedule
+  - config
+
+#### 分层问题
 不过分层也会有引入一个新问题，层与层之间通信问题，继而转变为实体转换、应该存在于什么位置的问题？？
 全部放在service层中？这样就和上面的原始结构一致，不能分层；或者往前一步，所有能往下沉入的都放置在下层，这样就能够满足上层依赖的问题。
 但是新问题又产生了，``层与层之间基本都需要做实体转换，大量属性/字段冗余``
