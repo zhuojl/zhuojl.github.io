@@ -6,7 +6,7 @@
 网上cas的帖子比较多，给个[高赞](https://www.jianshu.com/p/75edcc05acfd)的.
 
 按照正常cas流程，登录是悄然完成，至少是对用户无感知的。但是在现有的系统是个特殊的流程，每次都是跳默认页面，体验太差。。。。
-而且这个问题从公司成立到现在6年了居然没人解决，诧异而又充满兴趣。。。。。
+而且这个问题从公司成立到现在~~6年了居然没人解决~~(应该是公司这两三年开始搞前后端分离就有问题了)，诧异而又充满兴趣。。。。。
 
 下面画了个图描述了一下正常cas流程和我们系统的流程，正常cas流程是抄的**高赞**，看这篇之前需要至少先看懂**高赞**；
 后一部分是我们现在后端微服务的请求流程
@@ -117,7 +117,7 @@ blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on th
 本来是想添加在service中，即：ssoUrl=https://cas.example.com/cas/login?service=https%3a%2f%2fapp2.example.com%2f``%3foriginalUrl%3dhttp%3a%2f%2fwww.baidu.com``，
 但是在第24步的时候报错：
 ``` text
-Ticket 'ST-7088-Ppxz765dxO40jTGKqoU5-gldsso.keruyun.com' does not match supplied service.
+Ticket 'ST-7088-Ppxz765dxO40jTGKqoU5' does not match supplied service.
 The original service was 'https://app2.example.com/callback?originalUrl=www.baidu.com' 
 and the supplied service was 'https://app2.example.com/callback'.
 ```
