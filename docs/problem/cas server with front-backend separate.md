@@ -238,6 +238,11 @@ successHandler.setTargetUrlParameter("cust_url");
 ```
 
 
+### 补充
+最近观察了一下其他业务的登录，发现别人没有透传参数也可以顺利跳转，咨询对方发现对方把访问的页面存session里了。。。  
+在下次登录的时候就可以拿到原始页面。。。 虽然能达到效果，但是感觉没有咋家的好 = =！
+
+
 
 #### 引用
 - [cas 介绍](https://www.jianshu.com/p/75edcc05acfd)
