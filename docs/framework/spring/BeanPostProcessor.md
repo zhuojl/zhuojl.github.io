@@ -107,6 +107,60 @@ spring源码中SmartInstantiationAwareBeanPostProcessor有实现的类是Abstrac
 网上其实有大量的文章说循环依赖，如[spring是如何解决循环依赖的](https://juejin.im/post/5c98a7b4f265da60ee12e9b2)。
 这里稍微说下为什么要 singletonFactories 这层缓存，而不是提前调用getEarlyBeanReference，将对象放在二级缓存earlySingletonObjects中？
 
+singletonFactories  
+earlySingletonObjects
+registeredSingletons
+
+``` puml
+serviceA -> singletonFactories: getBean("serviceA")
+note right
+this.singletonFactories.put(beanName, singletonFactory);
+this.earlySingletonObjects.remove(beanName);
+this.registeredSingletons.add(beanName);
+end note
+
+
+serviceA -> singletonFactories: getBean("serviceA")
+note right
+this.singletonFactories.put(beanName, singletonFactory);
+this.earlySingletonObjects.remove(beanName);
+this.registeredSingletons.add(beanName);
+end note
+
+
+serviceB -> singletonFactories: getBean("serviceB")
+note right
+this.singletonFactories.put(beanName, singletonFactory);
+this.earlySingletonObjects.remove(beanName);
+this.registeredSingletons.add(beanName);
+end note
+
+
+serviceA -> earlySingletonObjects: getBean("serviceA")
+note right
+this.earlySingletonObjects.put(beanName, singletonObject);
+this.singletonFactories.remove(beanName);
+end note
+
+serviceB -> singletonObjects: getBean("serviceB")
+note right
+this.singletonObjects.put(beanName, singletonObject);
+this.singletonFactories.remove(beanName);
+this.earlySingletonObjects.remove(beanName);
+end note
+
+
+serviceA -> singletonObjects: getBean("serviceA")
+note right
+this.singletonObjects.put(beanName, singletonObject);
+this.singletonFactories.remove(beanName);
+this.earlySingletonObjects.remove(beanName);
+end note
+
+```
+
+
+
 我想 不能少的原因可能是：
 1. 不打乱bean初始化的流程（实例话 -> 属性填充 -> 初始化(包括代理处理)），
 2. 如果要提前调用，对所有对象都会触发提前代理处理，就算没有循环依赖，而循环依赖本来少
